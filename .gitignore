@@ -11,3 +11,13 @@ wheels/
 
 # Python version
 .python-version
+
+# Editor and IDE files
+.vscode/
+.idea/
+
+# MacOS files
+.DS_Store
+
+# Tests
+.pytest_cache/

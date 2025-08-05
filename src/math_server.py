@@ -1,4 +1,8 @@
+# Math dependency
 import numpy as np
+
+# Logging
+import logging
 
 from fastmcp import FastMCP
 
@@ -12,18 +16,20 @@ mcp = FastMCP(
 @mcp.tool
 def add(
     numbers: list[int | float],
-) -> np.float64 | ValueError:
+) -> float:
     """Adds a list of numbers with 64 bit floating point precision and returns a 64 bit float.
        You need to provide them in the format of a list. For example, [1, 2, 3] would return 6.0.
-       Optionally, you can specify the precision of the result.
     """
 
     if not numbers:
-        raise ValueError("""The list of numbers cannot be empty. Try wrapping the numbers in brackets, like [1, 2, 3], 
-                         if this is not the case.
+        logging.error("Received an empty list for addition.")
+        raise ValueError("""The list of numbers cannot be empty. Try wrapping the numbers in brackets, like [1, 2, 3], if this is not the case.
         """)
 
-    return np.sum(numbers, dtype=np.float64)
+    # Use numpy for fast addition
+    result = float(np.sum(numbers, dtype=np.float64))
+    logging.info(f"Adding numbers: {numbers} -> Result: {result}")
+    return result
 
 # Recommended best practice to ensure FastMCP server runs for all users & clients in a consistent way
 if __name__ == "__main__":
