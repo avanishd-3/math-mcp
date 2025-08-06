@@ -15,9 +15,9 @@ logger.addHandler(handler)
 # Set up MCP server fixture
 @pytest.fixture
 def mcp_server():
-    from src.math_server import mcp
+    from src.math_server import math_mcp
 
-    return mcp
+    return math_mcp
 
 """ 
 Add tests
