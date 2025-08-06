@@ -85,7 +85,6 @@ async def test_multiply_fractional_list(mcp_server: FastMCP, caplog: pytest.LogC
         # Test with a list containing fractional numbers
         result = await client.call_tool("multiply", {"numbers": [1/2, 1/3, 1/4]})
         assert result.data == pytest.approx(1/24, rel=1e-9)
-        print(caplog.text)
         assert 'Multiplying numbers: [0.5, 0.3333333333333333, 0.25] -> Result: 0.041666666666667' in caplog.text
 
 @pytest.mark.asyncio
