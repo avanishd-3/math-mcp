@@ -18,7 +18,7 @@ mcp = FastMCP(
 def add(
     numbers: list[int | float],
 ) -> float:
-    """Adds a list of numbers with 64 bit floating point precision and returns a 64 bit float.
+    """Adds a list of positive and/or negative numbers with 64 bit floating point precision and returns a 64 bit float.
        You need to provide them in the format of a list. For example, [1, 2, 3] would return 6.0.
     """
 
@@ -36,7 +36,7 @@ def add(
 def multiply(
     numbers: list[int | float],
 ) -> float:
-    """Multiplies a list of numbers with 64 bit floating point precision and returns a 64 bit float.
+    """Multiplies a list of positive and/or negative numbers with 64 bit floating point precision and returns a 64 bit float.
        You need to provide them in the format of a list. For example, [1, 2, 3] would return 6.0.
     """
 
