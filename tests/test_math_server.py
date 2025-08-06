@@ -125,3 +125,42 @@ async def test_subtract_fractional_numbers(mcp_server: FastMCP, caplog: pytest.L
         result = await client.call_tool("subtract", {"number_1": 1/2, "number_2": 1/3})
         assert result.data == pytest.approx(1/6, rel=1e-9)
         assert 'Doing subtraction: 0.5 - 0.3333333333333333 -> Result: 0.166666666666667' in caplog.text
+
+"""
+Divide tests
+"""
+
+@pytest.mark.asyncio
+# Using the mcp fixture to access the MCP server instance
+async def test_divide_positive_numbers(mcp_server: FastMCP, caplog: pytest.LogCaptureFixture):
+    async with Client(mcp_server) as client:
+        # Test with a valid list containing positive numbers
+        result = await client.call_tool("divide", {"number_1": 5, "number_2": 3})
+        assert result.data == pytest.approx(5/3, rel=1e-9)
+        print(caplog.text)
+        assert 'Doing division: 5 / 3 -> Result: 1.666666666666667' in caplog.text
+
+@pytest.mark.asyncio
+async def test_divide_negative_numbers(mcp_server: FastMCP, caplog: pytest.LogCaptureFixture):
+    async with Client(mcp_server) as client:
+        # Test with a list containing negative numbers
+        result = await client.call_tool("divide", {"number_1": -5, "number_2": 3})
+        assert result.data == pytest.approx(-5/3, rel=1e-9)
+        assert 'Doing division: -5 / 3 -> Result: -1.666666666666667' in caplog.text
+
+@pytest.mark.asyncio
+async def test_divide_fractional_numbers(mcp_server: FastMCP, caplog: pytest.LogCaptureFixture):
+    async with Client(mcp_server) as client:
+        # Test with a list containing fractional numbers
+        result = await client.call_tool("divide", {"number_1": 1/2, "number_2": 1/3})
+        assert result.data == 1.5
+        assert 'Doing division: 0.5 / 0.3333333333333333 -> Result: 1.5' in caplog.text
+
+@pytest.mark.asyncio
+# Using the mcp fixture to access the MCP server instance
+async def test_divide_by_zero(mcp_server: FastMCP, caplog: pytest.LogCaptureFixture):
+    async with Client(mcp_server) as client:
+        # Test with an empty list to check for ToolError
+        with pytest.raises(exceptions.ToolError):
+            await client.call_tool("divide", {"number_1": 5, "number_2": 0})
+            assert 'Division by zero error.' in caplog.text

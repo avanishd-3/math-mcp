@@ -73,6 +73,22 @@ def multiply(
     logging.info(f"Multiplying numbers: {numbers} -> Result: {result}")
     return result
 
+@mcp.tool
+def divide(
+    number_1: int | float,
+    number_2: int | float,
+) -> float:
+    """Divides two numbers with 64 bit floating point precision and returns a 64 bit float.
+       For example, dividing 10 by 2 would return 5.0.
+       You can also use fractions if you want to, like 1/2 for number_1 and 1/3 for number_2.
+    """
+    if number_2 == 0:
+        logging.error("Division by zero error.")
+        raise ValueError("Division by zero is not allowed.")
+    result = np.round(np.float64(number_1) / np.float64(number_2), decimals=SIXTY_FOUR_BIT_FLOAT_DECIMAL_PLACES)
+    logging.info(f"Doing division: {number_1} / {number_2} -> Result: {result}")
+    return result
+
 # Recommended best practice to ensure FastMCP server runs for all users & clients in a consistent way
 if __name__ == "__main__":
     mcp.run() # Run the MCP server
