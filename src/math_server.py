@@ -29,6 +29,7 @@ def add(
        You can also use fractions if you want to, like [1/2, 1/3, 1/4].
     """
 
+    # This is technically allowed by Fast MCP, but it is an error here
     if not numbers:
         logging.error("Received an empty list for addition.")
         raise ValueError("""The list of numbers cannot be empty. Try wrapping the numbers in brackets, like [1, 2, 3], if this is not the case.
@@ -48,6 +49,7 @@ def multiply(
        You can also use fractions if you want to, like [1/2, 1/3, 1/4].
     """
 
+    # This is technically allowed by Fast MCP, but it is an error here
     if not numbers:
         logging.error("Received an empty list for multiplication.")
         raise ValueError("""The list of numbers cannot be empty. Try wrapping the numbers in brackets, like [1, 2, 3], if this is not the case.
