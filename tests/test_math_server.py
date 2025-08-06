@@ -59,6 +59,35 @@ async def test_add_empty_list(mcp_server: FastMCP, caplog: pytest.LogCaptureFixt
             assert 'Received an empty list for addition.' in caplog.text
 
 """
+Subtract tests
+"""
+
+@pytest.mark.asyncio
+# Using the mcp fixture to access the MCP server instance
+async def test_subtract_positive_numbers(mcp_server: FastMCP, caplog: pytest.LogCaptureFixture):
+    async with Client(mcp_server) as client:
+        # Test with a valid list containing positive numbers
+        result = await client.call_tool("subtract", {"number_1": 5, "number_2": 3})
+        assert result.data == 2.0
+        assert 'Doing subtraction: 5 - 3 -> Result: 2.0' in caplog.text
+
+@pytest.mark.asyncio
+async def test_subtract_negative_numbers(mcp_server: FastMCP, caplog: pytest.LogCaptureFixture):
+    async with Client(mcp_server) as client:
+        # Test with a list containing negative numbers
+        result = await client.call_tool("subtract", {"number_1": -5, "number_2": -3})
+        assert result.data == -2.0
+        assert 'Doing subtraction: -5 - -3 -> Result: -2.0' in caplog.text
+
+@pytest.mark.asyncio
+async def test_subtract_fractional_numbers(mcp_server: FastMCP, caplog: pytest.LogCaptureFixture):
+    async with Client(mcp_server) as client:
+        # Test with a list containing fractional numbers
+        result = await client.call_tool("subtract", {"number_1": 1/2, "number_2": 1/3})
+        assert result.data == pytest.approx(1/6, rel=1e-9)
+        assert 'Doing subtraction: 0.5 - 0.3333333333333333 -> Result: 0.166666666666667' in caplog.text
+
+"""
 Multiply tests
 """
 
@@ -95,36 +124,6 @@ async def test_multiply_empty_list(mcp_server: FastMCP, caplog: pytest.LogCaptur
         with pytest.raises(exceptions.ToolError):
             await client.call_tool("multiply", {"numbers": []})
             assert 'Received an empty list for multiplication.' in caplog.text
-
-
-"""
-Subtract tests
-"""
-
-@pytest.mark.asyncio
-# Using the mcp fixture to access the MCP server instance
-async def test_subtract_positive_numbers(mcp_server: FastMCP, caplog: pytest.LogCaptureFixture):
-    async with Client(mcp_server) as client:
-        # Test with a valid list containing positive numbers
-        result = await client.call_tool("subtract", {"number_1": 5, "number_2": 3})
-        assert result.data == 2.0
-        assert 'Doing subtraction: 5 - 3 -> Result: 2.0' in caplog.text
-
-@pytest.mark.asyncio
-async def test_subtract_negative_numbers(mcp_server: FastMCP, caplog: pytest.LogCaptureFixture):
-    async with Client(mcp_server) as client:
-        # Test with a list containing negative numbers
-        result = await client.call_tool("subtract", {"number_1": -5, "number_2": -3})
-        assert result.data == -2.0
-        assert 'Doing subtraction: -5 - -3 -> Result: -2.0' in caplog.text
-
-@pytest.mark.asyncio
-async def test_subtract_fractional_numbers(mcp_server: FastMCP, caplog: pytest.LogCaptureFixture):
-    async with Client(mcp_server) as client:
-        # Test with a list containing fractional numbers
-        result = await client.call_tool("subtract", {"number_1": 1/2, "number_2": 1/3})
-        assert result.data == pytest.approx(1/6, rel=1e-9)
-        assert 'Doing subtraction: 0.5 - 0.3333333333333333 -> Result: 0.166666666666667' in caplog.text
 
 """
 Divide tests
