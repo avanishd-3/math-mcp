@@ -41,6 +41,15 @@ async def test_add_negative_list(mcp_server: FastMCP, caplog: pytest.LogCaptureF
         assert 'Adding numbers: [-1, -2, -3] -> Result: -6.0' in caplog.text
 
 @pytest.mark.asyncio
+async def test_add_fractional_list(mcp_server: FastMCP, caplog: pytest.LogCaptureFixture):
+    async with Client(mcp_server) as client:
+        # Test with a list containing fractional numbers
+        result = await client.call_tool("add", {"numbers": [1/2, 1/3, 1/4]})
+        assert result.data == pytest.approx(1.083333333333333, rel=1e-9)
+        print(caplog.text)
+        assert 'Adding numbers: [0.5, 0.3333333333333333, 0.25] -> Result: 1.083333333333333' in caplog.text
+
+@pytest.mark.asyncio
 # Using the mcp fixture to access the MCP server instance
 async def test_add_empty_list(mcp_server: FastMCP, caplog: pytest.LogCaptureFixture):
     async with Client(mcp_server) as client:
@@ -60,7 +69,7 @@ async def test_multiply_positive_list(mcp_server: FastMCP, caplog: pytest.LogCap
         # Test with a valid list containing positive numbers
         result = await client.call_tool("multiply", {"numbers": [1, 1, 1]})
         assert result.data == 1.0
-    #    assert 'Multiplying numbers: [1, 1, 1] -> Result: 1.0' in caplog.text
+        assert 'Multiplying numbers: [1, 1, 1] -> Result: 1.0' in caplog.text
 
 @pytest.mark.asyncio
 async def test_multiply_negative_list(mcp_server: FastMCP, caplog: pytest.LogCaptureFixture):
@@ -68,7 +77,16 @@ async def test_multiply_negative_list(mcp_server: FastMCP, caplog: pytest.LogCap
         # Test with a list containing negative numbers
         result = await client.call_tool("multiply", {"numbers": [-1, -2, -3]})
         assert result.data == -6.0
-    #    assert 'Multiplying numbers: [-1, -2, -3] -> Result: -6.0' in caplog.text
+        assert 'Multiplying numbers: [-1, -2, -3] -> Result: -6.0' in caplog.text
+
+@pytest.mark.asyncio
+async def test_multiply_fractional_list(mcp_server: FastMCP, caplog: pytest.LogCaptureFixture):
+    async with Client(mcp_server) as client:
+        # Test with a list containing fractional numbers
+        result = await client.call_tool("multiply", {"numbers": [1/2, 1/3, 1/4]})
+        assert result.data == pytest.approx(1/24, rel=1e-9)
+        print(caplog.text)
+        assert 'Multiplying numbers: [0.5, 0.3333333333333333, 0.25] -> Result: 0.041666666666667' in caplog.text
 
 @pytest.mark.asyncio
 # Using the mcp fixture to access the MCP server instance
@@ -77,4 +95,4 @@ async def test_multiply_empty_list(mcp_server: FastMCP, caplog: pytest.LogCaptur
         # Test with an empty list to check for ToolError
         with pytest.raises(exceptions.ToolError):
             await client.call_tool("multiply", {"numbers": []})
-        #    assert 'Received an empty list for multiplication.' in caplog.text
+            assert 'Received an empty list for multiplication.' in caplog.text
