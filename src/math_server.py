@@ -6,6 +6,7 @@ import logging
 
 from fastmcp import FastMCP
 
+# Note: Fast MCP cannot handle having numpy types in the function signature (it just sends None), so use float or int instead.
 mcp = FastMCP(
     name="Math MCP Server",
     instructions="This server provides basic arithmetic operations in 64 bit floating point precision.",
@@ -27,7 +28,7 @@ def add(
         """)
 
     # Use numpy for fast addition
-    result = float(np.sum(numbers, dtype=np.float64))
+    result = np.sum(numbers, dtype=np.float64)
     logging.info(f"Adding numbers: {numbers} -> Result: {result}")
     return result
 
