@@ -47,6 +47,7 @@ def subtract(
 ) -> float:
     """Subtracts two numbers with 64 bit floating point precision and returns a 64 bit float.
        For example, subtracting 5 from 10 would return 5.0.
+       You can also use fractions if you want to, like 1/2 for number_1 and 1/3 for number_2.
     """
     result = np.round(np.float64(number_1) - np.float64(number_2), decimals=SIXTY_FOUR_BIT_FLOAT_DECIMAL_PLACES)
     logging.info(f"Doing subtraction: {number_1} - {number_2} -> Result: {result}")
