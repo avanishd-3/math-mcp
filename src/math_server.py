@@ -41,6 +41,18 @@ def add(
     return result
 
 @mcp.tool
+def subtract(
+    number_1: int | float,
+    number_2: int | float,
+) -> float:
+    """Subtracts two numbers with 64 bit floating point precision and returns a 64 bit float.
+       For example, subtracting 5 from 10 would return 5.0.
+    """
+    result = np.round(np.float64(number_1) - np.float64(number_2), decimals=SIXTY_FOUR_BIT_FLOAT_DECIMAL_PLACES)
+    logging.info(f"Doing subtraction: {number_1} - {number_2} -> Result: {result}")
+    return result
+
+@mcp.tool
 def multiply(
     numbers: list[int | float],
 ) -> float:
