@@ -4,6 +4,10 @@
 
 This is an MCP (Model Context Protocol) server that can do basic arithmetic in 64 bit precision, along with matrix multiplication.
 
+<a href="https://glama.ai/mcp/servers/@avanishd-3/math-mcp">
+  <img width="380" height="200" src="https://glama.ai/mcp/servers/@avanishd-3/math-mcp/badge" alt="Math Server MCP server" />
+</a>
+
 ## Features
 - Addition 
 - Subtraction 
