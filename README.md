@@ -102,7 +102,7 @@ git commit -m "Added a new feature"
 git push origin add-feature
 ```
 
-6. Open a pull request.
+5. Open a pull request.
 
 ## Project Structure
 ```text
