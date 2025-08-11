@@ -98,9 +98,11 @@ git commit -m "Added a new feature"
 ```
 
 4. Push to your fork
+```
 git push origin add-feature
+```
 
-5. Open a pull request.
+6. Open a pull request.
 
 ## Project Structure
 ```text
