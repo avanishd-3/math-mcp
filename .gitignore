@@ -9,8 +9,6 @@ wheels/
 # Virtual environments
 .venv
 
-# Python version
-.python-version
 
 # Editor and IDE files
 .vscode/
